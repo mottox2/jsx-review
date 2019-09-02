@@ -2,5 +2,12 @@
   "name": "jsx-rss",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "react": "^16.9.0",
+    "react-test-renderer": "^16.9.0"
+  }
 }
