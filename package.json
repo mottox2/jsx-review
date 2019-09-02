@@ -9,5 +9,14 @@
     "@babel/preset-react": "^7.0.0",
     "react": "^16.9.0",
     "react-test-renderer": "^16.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.3",
+    "@types/react": "^16.9.2",
+    "@types/react-test-renderer": "^16.9.0",
+    "typescript": "^3.6.2"
+  },
+  "scripts": {
+    "build": "tsc --outDir dist/"
   }
 }
