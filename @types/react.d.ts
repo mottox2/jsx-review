@@ -1,5 +1,9 @@
+/// <reference types="../node_modules/@types/react" />
+
 declare namespace JSX {
   interface IntrinsicElements {
-    customText: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+    document: any
+    paragraph: any
+    imageRef: any
   }
 }
