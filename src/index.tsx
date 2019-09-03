@@ -19,30 +19,7 @@ const Paragraph: React.FC = ({ children }) => {
   return <paragraph>{children}</paragraph>
 }
 
-const tree = (
-  <document>
-    <h1>Hello World</h1>
-    <Paragraph>
-      こんにちは
-      <b>太字にも対応しています。</b>
-      画像の注釈もこのとおり　
-      <ImageRef id="image1" />
-    </Paragraph>
-    <Image src="image1" alt="画像の説明" />
-    <h2>aaaa</h2>
-    <Paragraph>
-      こんにちは
-      <b>太字にも対応しています。</b>
-      画像の注釈もこのとおり　
-      <ImageRef id="image1" />
-    </Paragraph>
-  </document>
-)
-const json = testRenderer.create(tree).toJSON()
-
-console.log(JSON.stringify(json, null, 2))
-
-const render = (tree: ReactTestRendererJSON): string => {
+const jsonToReview = (tree: ReactTestRendererJSON): string => {
   const { type, props, children } = tree
   switch (type) {
     // blocks
@@ -55,17 +32,20 @@ const render = (tree: ReactTestRendererJSON): string => {
       }
       const level = Number(type.replace('h', ''))
       const innerText = children
-        .map(child => (typeof child === 'string' ? child : render(child)))
+        .map(child => (typeof child === 'string' ? child : jsonToReview(child)))
         .join('')
       return `${'='.repeat(level)} ${innerText}` + '\n'
     case 'document':
       return children
-        ? children.map(child => (typeof child === 'string' ? child : render(child))).join('\n') +
-            '\n'
+        ? children
+            .map(child => (typeof child === 'string' ? child : jsonToReview(child)))
+            .join('\n') + '\n'
         : ''
     case 'paragraph':
       return children
-        ? children.map(child => (typeof child === 'string' ? child : render(child))).join('') + '\n'
+        ? children
+            .map(child => (typeof child === 'string' ? child : jsonToReview(child)))
+            .join('') + '\n'
         : ''
     case 'img':
       if (children) {
@@ -86,4 +66,30 @@ const render = (tree: ReactTestRendererJSON): string => {
   }
 }
 
-console.log(render(json!))
+const render = (jsx: React.ReactElement) => {
+  const json = testRenderer.create(jsx).toJSON()
+  console.log(JSON.stringify(json, null, 2))
+  return jsonToReview(json!)
+}
+
+const result = render(
+  <document>
+    <h1>Hello World</h1>
+    <Paragraph>
+      こんにちは
+      <b>太字にも対応しています。</b>
+      画像の注釈もこのとおり
+      <ImageRef id="image1" />
+    </Paragraph>
+    <Image src="image1" alt="画像の説明" />
+    <h2>aaaa</h2>
+    <Paragraph>
+      こんにちは
+      <b>太字にも対応しています。</b>
+      画像の注釈もこのとおり
+      <ImageRef id="image1" />
+    </Paragraph>
+  </document>
+)
+
+console.log(result)
