@@ -1,6 +1,12 @@
 import testRenderer, { ReactTestRendererJSON } from 'react-test-renderer'
 import * as React from 'react'
 
+/**
+ * 画像を表示するコンポーネント *scale*で画像の幅を指定できる。
+ * @param {string} src 画像ファイル名
+ * @param {string} alt 画像の説明
+ * @param {number} scale 画像のスケール
+ */
 const Image: React.FC<{
   src: string
   alt: string
@@ -68,27 +74,20 @@ const jsonToReview = (tree: ReactTestRendererJSON): string => {
 
 const render = (jsx: React.ReactElement) => {
   const json = testRenderer.create(jsx).toJSON()
-  console.log(JSON.stringify(json, null, 2))
+  // console.log(JSON.stringify(json, null, 2))
   return jsonToReview(json!)
 }
 
 const result = render(
   <document>
-    <h1>Hello World</h1>
+    <h1>技術書典お品書き</h1>
     <Paragraph>
-      こんにちは
-      <b>太字にも対応しています。</b>
-      画像の注釈もこのとおり
+      Slackの拡張を自分で書くための本です。
+      <b>Slack App開発ガイド</b>は初学者向けです。
       <ImageRef id="image1" />
     </Paragraph>
     <Image src="image1" alt="画像の説明" />
-    <h2>aaaa</h2>
-    <Paragraph>
-      こんにちは
-      <b>太字にも対応しています。</b>
-      画像の注釈もこのとおり
-      <ImageRef id="image1" />
-    </Paragraph>
+    <Paragraph>開発ガイドはBOOTHで販売中</Paragraph>
   </document>
 )
 
